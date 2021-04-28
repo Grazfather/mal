@@ -8,4 +8,7 @@
                      :aot [mal.step0-repl]}
              :step1 {:main mal.step1-read-print
                      :uberjar-name "step1_read_print.jar"
-                     :aot [mal.step1-read-print]}})
+                     :aot [mal.step1-read-print]}
+             :step2 {:main mal.step2-eval
+                     :uberjar-name "step2_eval.jar"
+                     :aot [mal.step2-eval]}})
