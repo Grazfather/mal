@@ -37,6 +37,7 @@
 (declare read-atom)
 (declare read-form)
 (declare read-list)
+(declare read-vec)
 
 (defn unescape [s]
   (-> s
@@ -57,21 +58,30 @@
       (= "nil" tok) nil
       (re-seq number-re tok) (read-string tok)
       (re-seq str-re tok) (->> tok (re-find str-re) second unescape)
-      (re-seq invalid-str-re tok) (throw (Exception. "expected closing \""))
+      (re-seq invalid-str-re tok) (throw (Exception. "expected closing \", EOF"))
       :else (symbol tok))))
 
 (defn read-form [r]
   (condp = (rdr-peek r)
     "(" (read-list (rdr-pop r))
+    "[" (read-vec (rdr-pop r))
     (read-atom r)))
 
-(defn read-list [r]
+(defn read-vec [r]
   (loop [l []]
+    (if (rdr-empty? r)
+      (throw (Exception. "expected ')', got EOF"))
+      (if (= (rdr-peek r) "]")
+        (do (rdr-pop r) l)
+        (recur (conj l (read-form r)))))))
+
+(defn read-list [r]
+  (loop [l '()]
     (if (rdr-empty? r)
       (throw (Exception. "expected ')', got EOF"))
       (if (= (rdr-peek r) ")")
         (do (rdr-pop r) l)
-        (recur (conj l (read-form r)))))))
+        (recur (concat l [(read-form r)]))))))
 
 (defn read-str [s]
   (-> s

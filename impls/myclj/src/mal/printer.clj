@@ -7,5 +7,6 @@
     (string? sexp) (clojure.core/pr-str sexp)
     (symbol? sexp) (str sexp)
     (nil? sexp) "nil"
-    (sequential? sexp) (str "(" (s/join " " (map pr-str sexp)) ")")
+    (seq? sexp) (str "(" (s/join " " (map pr-str sexp)) ")")
+    (vector? sexp) (str "[" (s/join " " (map pr-str sexp)) "]")
     :else (str sexp)))
