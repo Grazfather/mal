@@ -11,4 +11,7 @@
                      :aot [mal.step1-read-print]}
              :step2 {:main mal.step2-eval
                      :uberjar-name "step2_eval.jar"
-                     :aot [mal.step2-eval]}})
+                     :aot [mal.step2-eval]}
+             :step3 {:main mal.step3-env
+                     :uberjar-name "step3_env.jar"
+                     :aot [mal.step3-env]}})
