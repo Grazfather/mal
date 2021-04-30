@@ -22,19 +22,15 @@
   (if (seq? ast)
     (if (empty? ast)
       ast
-      (condp = (first ast)
-        (symbol "def!") (env/env-set! (second ast) (EVAL (nth ast 2) env) env)
-        (symbol "let*") (let [newenv (env/env-new env)
-                              bindings (second ast)]
-                          (loop [k (first bindings)
-                                 v (second bindings)
-                                 remaining (drop 2 bindings)]
-                            (env/env-set! k (EVAL v newenv) newenv)
-                            (when-not (empty? remaining)
-                              (recur (first remaining) (second remaining) (drop 2 remaining))))
-                          (EVAL (nth ast 2) newenv))
-        (let [new-ast (eval-ast ast env)]
-          (apply (first new-ast) (rest new-ast)))))
+      (let [[kword a1 a2] ast]
+        (condp = kword
+          'def! (env/env-set! a1 (EVAL a2 env) env)
+          'let* (let [let-env (env/env-new env)]
+                  (doseq [[k v] (partition 2 a1)]
+                    (env/env-set! k (EVAL v let-env) let-env))
+                  (EVAL a2 let-env))
+          (let [new-ast (eval-ast ast env)]
+            (apply (first new-ast) (rest new-ast))))))
     (eval-ast ast env)))
 
 (defn eval-ast
