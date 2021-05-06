@@ -14,4 +14,7 @@
                      :aot [mal.step2-eval]}
              :step3 {:main mal.step3-env
                      :uberjar-name "step3_env.jar"
-                     :aot [mal.step3-env]}})
+                     :aot [mal.step3-env]}
+             :step4 {:main mal.step4-if-fn-do
+                     :uberjar-name "step4_if_fn_do.jar"
+                     :aot [mal.step4-if-fn-do]}})

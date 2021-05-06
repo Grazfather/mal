@@ -1,8 +1,8 @@
 
 SOURCES_UTIL = src/mal/readline.clj
 SOURCES_BASE = $(SOURCES_UTIL) src/mal/reader.clj src/mal/printer.clj
-#SOURCES_LISP = src/mal/env.cljc src/mal/core.cljc src/mal/stepA_mal.cljc
-SRCS = $(SOURCES_BASE) src/mal/env.clj #src/mal/core.cljc
+SOURCES_LISP = src/mal/env.clj src/mal/core.clj #src/mal/stepA_mal.cljc
+SRCS = $(SOURCES_BASE) src/mal/env.clj src/mal/core.clj
 SOURCES = $(SOURCES_BASE) $(SOURCES_LISP)
 
 DEPS = deps

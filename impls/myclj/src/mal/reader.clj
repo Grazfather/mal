@@ -44,14 +44,13 @@
       (clojure.string/replace #"\\n" "\n")
       (clojure.string/replace #"\\\"" "\"")))
 
-
 (def number-re #"^-?[0-9]+(\.[0-9]+)?$")
 (def invalid-str-re #"^\"([^\"]*)$")
-(def str-re #"^\"([^\"]*)\"$")
+(def str-re #"^\"(([^\\\"]|[\\].)*)\"$")
 
 (defn read-atom [r]
   (let [tok (rdr-next r)]
-    (cond 
+    (cond
       (= \: (nth tok 0)) (keyword (subs tok 1))
       (= "true" tok) true
       (= "false" tok) false
