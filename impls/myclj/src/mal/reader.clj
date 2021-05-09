@@ -32,6 +32,7 @@
         #"[\s,]*(~@|[\[\]{}()'`~^@]|\"(?:\\.|[^\\\"])*\"?|;.*|[^\s\[\]{}('\"`,;)]*)")
        (map second)
        (filter (complement empty?))
+       (filter #(not= \; (first %)))
        reader))
 
 (declare read-atom)
@@ -67,6 +68,7 @@
     "(" (apply list (read-seq r "(" ")"))
     "[" (vec (read-seq r "[" "]"))
     "{" (apply hash-map (read-seq r "{" "}"))
+    "@" (list 'deref (read-form (rdr-pop r)))
     (read-atom r)))
 
 (defn read-seq [r start end]
@@ -82,3 +84,5 @@
   (-> s
       tokenize
       read-form))
+
+(read-str "@a")

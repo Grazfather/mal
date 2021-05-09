@@ -1,6 +1,7 @@
 (ns mal.core
   (:require [mal.printer :as printer]
-            [clojure.string :as s]))
+            [clojure.string :as s]
+            [mal.reader :as reader]))
 
 (def ns
   {'= =
@@ -13,6 +14,13 @@
    'str (fn [& args] (s/join "" (map #(printer/pr-str %1 false) args)))
    'prn (fn [& args] (println (s/join " " (map #(printer/pr-str %1 true) args))))
    'println (fn [& args] (println (s/join " " (map #(printer/pr-str %1 false) args))))
+   'read-string reader/read-str
+   'slurp slurp
    'empty? empty?
    'list? seq?
-   'list list})
+   'list list
+   'atom atom
+   'atom? printer/atom?
+   'deref deref
+   'reset! reset!
+   'swap! swap!})

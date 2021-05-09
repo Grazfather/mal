@@ -20,4 +20,7 @@
                      :aot [mal.step4-if-fn-do]}
              :step5 {:main mal.step5-tco
                      :uberjar-name "step5_tco.jar"
-                     :aot [mal.step5-tco]}})
+                     :aot [mal.step5-tco]}
+             :step6 {:main mal.step6-file
+                     :uberjar-name "step6_file.jar"
+                     :aot [mal.step6-file]}})

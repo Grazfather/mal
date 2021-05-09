@@ -2,6 +2,8 @@
   (:require [clojure.string :as s])
   (:require [clojure.test :refer [function?]]))
 
+(defn atom? [v] (= (type v) clojure.lang.Atom))
+
 (defn escape
   [s]
   (-> s
@@ -22,4 +24,5 @@
      (seq? sexp) (str "(" (s/join " " (map #(pr-str % print_readably) sexp)) ")")
      (vector? sexp) (str "[" (s/join " " (map #(pr-str % print_readably) sexp)) "]")
      (function? sexp) "#<function>"
+     (atom? sexp) (str "(atom " (pr-str @sexp) ")")
      :else (str sexp))))
