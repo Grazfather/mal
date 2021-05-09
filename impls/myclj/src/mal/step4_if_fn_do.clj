@@ -50,7 +50,7 @@
   [ast env]
   (cond
     (symbol? ast) (env/env-get ast env)
-    (seq? ast) (map #(EVAL % env) ast)
+    (seq? ast) (mapv #(EVAL % env) ast)
     (vector? ast) (mapv #(EVAL % env) ast)
     :else ast))
 

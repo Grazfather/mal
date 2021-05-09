@@ -30,7 +30,7 @@
     (symbol? ast) (if (contains? env ast)
                     (get env ast)
                     (throw (Exception. "Value not found")))
-    (seq? ast) (map #(EVAL % env) ast)
+    (seq? ast) (mapv #(EVAL % env) ast)
     (vector? ast) (mapv #(EVAL % env) ast)
     :else ast))
 
