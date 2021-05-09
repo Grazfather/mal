@@ -1,5 +1,5 @@
 (ns mal.reader
-  (:require [clojure.string]))
+  (:require [clojure.string :as s]))
 
 (defn reader
   "Create a stateful reader from a sequence of matches"
@@ -41,8 +41,11 @@
 
 (defn unescape [s]
   (-> s
-      (clojure.string/replace #"\\n" "\n")
-      (clojure.string/replace #"\\\"" "\"")))
+      ;; We have to 'hide' escaped slashes from the unescaper
+      (s/replace "\\\\" (-> 0x1F4A9 (Character/toChars) String.))
+      (s/replace "\\n" "\n")
+      (s/replace "\\\"" "\"")
+      (s/replace (-> 0x1F4A9 (Character/toChars) String.) "\\")))
 
 (def number-re #"^-?[0-9]+(\.[0-9]+)?$")
 (def invalid-str-re #"^\"([^\"]*)$")
