@@ -44,18 +44,17 @@
                   (recur a2 env)
                   (when (> (count ast) 3)
                     (recur (nth ast 3) env)))
-            'fn* {:func (fn [& args]
-                          (EVAL a2 (env/env-new env a1 args)))
-                  :expr a2
-                  :params a1
-                  :env env}
+            ; We use with-meta to hide this data from the printer
+            'fn* (with-meta (fn [& args]
+                              (EVAL a2 (env/env-new env a1 args)))
+                   {:expr a2
+                    :params a1
+                    :env env})
             (let [new-ast (eval-ast ast env)
                   f (first new-ast)
                   args (rest new-ast)]
-              (if (map? f)
-                (let [{:keys [expr env params]} f
-                      f-env (env/env-new env params args)]
-                  (recur expr f-env))
+              (if-let [{:keys [expr env params]} (meta f)]
+                (recur expr (env/env-new env params args))
                 (apply f args))))))
       (eval-ast ast env))))
 
@@ -77,7 +76,7 @@
       PRINT))
 
 ; Define `not` in mal itself
-;; (rep "(def! not (fn* (a) (if a false true)))")
+(rep "(def! not (fn* (a) (if a false true)))")
 
 (defn repl-loop []
   (print "user> ")
