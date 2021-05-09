@@ -32,6 +32,10 @@
                     (throw (Exception. "Value not found")))
     (seq? ast) (mapv #(EVAL % env) ast)
     (vector? ast) (mapv #(EVAL % env) ast)
+    (map? ast) (->> ast
+                    (apply concat) ; Flatten to vector
+                    (map #(EVAL % env))
+                    (apply hash-map)) ; Back to a map
     :else ast))
 
 (defn PRINT [arg]

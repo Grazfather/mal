@@ -36,8 +36,7 @@
 
 (declare read-atom)
 (declare read-form)
-(declare read-list)
-(declare read-vec)
+(declare read-seq)
 
 (defn unescape [s]
   (-> s
@@ -65,25 +64,19 @@
 
 (defn read-form [r]
   (condp = (rdr-peek r)
-    "(" (read-list (rdr-pop r))
-    "[" (read-vec (rdr-pop r))
+    "(" (apply list (read-seq r "(" ")"))
+    "[" (vec (read-seq r "[" "]"))
+    "{" (apply hash-map (read-seq r "{" "}"))
     (read-atom r)))
 
-(defn read-vec [r]
+(defn read-seq [r start end]
+  (assert (= start (rdr-next r)))
   (loop [l []]
     (if (rdr-empty? r)
-      (throw (Exception. "expected ')', got EOF"))
-      (if (= (rdr-peek r) "]")
+      (throw (Exception. (str "expected '" end "', got EOF")))
+      (if (= (rdr-peek r) end)
         (do (rdr-pop r) l)
         (recur (conj l (read-form r)))))))
-
-(defn read-list [r]
-  (loop [l '()]
-    (if (rdr-empty? r)
-      (throw (Exception. "expected ')', got EOF"))
-      (if (= (rdr-peek r) ")")
-        (do (rdr-pop r) l)
-        (recur (concat l [(read-form r)]))))))
 
 (defn read-str [s]
   (-> s

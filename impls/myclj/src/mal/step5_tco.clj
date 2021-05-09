@@ -64,6 +64,10 @@
     (symbol? ast) (env/env-get ast env)
     (seq? ast) (mapv #(EVAL % env) ast)
     (vector? ast) (mapv #(EVAL % env) ast)
+    (map? ast) (->> ast
+                    (apply concat) ; Flatten to vector
+                    (map #(EVAL % env))
+                    (apply hash-map)) ; Back to a map
     :else ast))
 
 (defn PRINT [arg]
