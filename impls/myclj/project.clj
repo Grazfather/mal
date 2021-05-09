@@ -17,4 +17,7 @@
                      :aot [mal.step3-env]}
              :step4 {:main mal.step4-if-fn-do
                      :uberjar-name "step4_if_fn_do.jar"
-                     :aot [mal.step4-if-fn-do]}})
+                     :aot [mal.step4-if-fn-do]}
+             :step5 {:main mal.step5-tco
+                     :uberjar-name "step5_tco.jar"
+                     :aot [mal.step5-tco]}})
