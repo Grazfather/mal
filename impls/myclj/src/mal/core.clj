@@ -19,8 +19,12 @@
    'empty? empty?
    'list? seq?
    'list list
+   'vector? vector?
+   'vec vec
    'atom atom
    'atom? printer/atom?
    'deref deref
    'reset! reset!
-   'swap! swap!})
+   'swap! swap!
+   'cons cons
+   'concat concat})

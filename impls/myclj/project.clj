@@ -23,4 +23,7 @@
                      :aot [mal.step5-tco]}
              :step6 {:main mal.step6-file
                      :uberjar-name "step6_file.jar"
-                     :aot [mal.step6-file]}})
+                     :aot [mal.step6-file]}
+             :step7 {:main mal.step7-quote
+                     :uberjar-name "step7_quote.jar"
+                     :aot [mal.step7-quote]}})

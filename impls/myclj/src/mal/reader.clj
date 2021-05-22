@@ -69,6 +69,10 @@
     "[" (vec (read-seq r "[" "]"))
     "{" (apply hash-map (read-seq r "{" "}"))
     "@" (list 'deref (read-form (rdr-pop r)))
+    "'" (list 'quote  (read-form (rdr-pop r)))
+    "`" (list 'quasiquote  (read-form (rdr-pop r)))
+    "~" (list 'unquote  (read-form (rdr-pop r)))
+    "~@" (list 'splice-unquote  (read-form (rdr-pop r)))
     (read-atom r)))
 
 (defn read-seq [r start end]
