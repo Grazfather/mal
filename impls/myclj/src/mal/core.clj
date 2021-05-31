@@ -27,4 +27,7 @@
    'reset! reset!
    'swap! swap!
    'cons cons
-   'concat concat})
+   'concat concat
+   'nth nth
+   'first first
+   'rest rest})
