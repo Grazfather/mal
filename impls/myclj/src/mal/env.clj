@@ -15,7 +15,7 @@
             rexprs (rest exprs)]
        (when bind
          (if (= bind (symbol "&")) ;; Variadic arg
-           (env-set! (first rbinds) (if expr (cons expr rexprs) '()) env)
+           (env-set! (first rbinds) (if-not (nil? expr) (cons expr rexprs) '()) env)
            (do
              (env-set! bind expr env)
              (recur (first rbinds) (rest rbinds) (first rexprs) (rest rexprs))))))
