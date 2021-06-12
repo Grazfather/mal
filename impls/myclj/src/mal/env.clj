@@ -30,4 +30,4 @@
 (defn env-get [k env]
   (if-let [env (env-find k env)]
     (get-in @env [:data k])
-    (throw (Exception. (str "Symbol '" k "' not found")))))
+    (throw (Exception. (str "'" k "' not found")))))

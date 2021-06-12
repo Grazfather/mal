@@ -25,4 +25,8 @@
      (vector? sexp) (str "[" (s/join " " (map #(pr-str % print_readably) sexp)) "]")
      (function? sexp) "#<function>"
      (atom? sexp) (str "(atom " (pr-str @sexp) ")")
+     (map? sexp) (str "{" (s/join " " (map (fn [[k v]]
+                                             (str (pr-str k print_readably)
+                                                  " "
+                                                  (pr-str v print_readably))) sexp)) "}")
      :else (str sexp))))

@@ -21,6 +21,7 @@
    'list list
    'vector? vector?
    'vec vec
+   'vector vector
    'atom atom
    'atom? printer/atom?
    'deref deref
@@ -30,4 +31,23 @@
    'concat concat
    'nth nth
    'first first
-   'rest rest})
+   'rest rest
+   'apply apply
+   'map (fn [f l] (doall (map f l)))
+   'throw (fn [v] (throw (ex-info "mal exception" {:value v})))
+   'nil? nil?
+   'true? true?
+   'false? false?
+   'symbol? symbol?
+   'symbol symbol
+   'keyword keyword
+   'keyword? keyword?
+   'sequential? sequential?
+   'hash-map hash-map
+   'map? map?
+   'assoc assoc
+   'dissoc dissoc
+   'get get
+   'contains? contains?
+   'keys (fn [map] (let [ks (keys map)] (if (nil? ks) '() ks)))
+   'vals (fn [map] (let [vs (vals map)] (if (nil? vs) '() vs)))})
