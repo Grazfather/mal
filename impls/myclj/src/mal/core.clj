@@ -1,7 +1,9 @@
 (ns mal.core
+  (:refer-clojure :exclude [pr-str ns])
   (:require [mal.printer :as printer]
             [clojure.string :as s]
-            [mal.reader :as reader]))
+            [mal.reader :as reader]
+            [mal.readline :as readline]))
 
 (def ns
   {'= =
@@ -50,4 +52,22 @@
    'get get
    'contains? contains?
    'keys (fn [map] (let [ks (keys map)] (if (nil? ks) '() ks)))
-   'vals (fn [map] (let [vs (vals map)] (if (nil? vs) '() vs)))})
+   'vals (fn [map] (let [vs (vals map)] (if (nil? vs) '() vs)))
+   'readline (fn [prompt]
+               (print prompt)
+               (flush)
+               (readline/readline ""))
+   'time-ms (fn [] (System/currentTimeMillis))
+   'meta (fn [o] (:mal-meta (meta o)))
+   'with-meta (fn [o m] (let [old-meta (meta o)
+                              new-meta (assoc old-meta :mal-meta m)]
+                          (with-meta o new-meta)))
+   'fn? (fn [o] (if (and (fn? o) (not (:is-macro (meta o)))) true false))
+   'macro? (fn [o] (if (and (fn? o) (:is-macro (meta o))) true false))
+   'string? string?
+   'number? number?
+   'seq (fn [s]  (seq (if (string? s)
+                        (map str s)
+                        s)))
+   'conj conj
+   'clojure-eval (fn [s] (println (eval (read-string s))))})

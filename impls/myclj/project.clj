@@ -32,4 +32,7 @@
                      :aot [mal.step8-macros]}
              :step9 {:main mal.step9-try
                      :uberjar-name "step9_try.jar"
-                     :aot [mal.step9-try]}})
+                     :aot [mal.step9-try]}
+             :stepA {:main mal.stepA-mal
+                     :uberjar-name "stepA_mal.jar"
+                     :aot [mal.stepA-mal]}})

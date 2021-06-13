@@ -73,6 +73,9 @@
     "`" (list 'quasiquote  (read-form (rdr-pop r)))
     "~" (list 'unquote  (read-form (rdr-pop r)))
     "~@" (list 'splice-unquote  (read-form (rdr-pop r)))
+    "^" (let [m (read-form (rdr-pop r))
+              o (read-form r)]
+          (list 'with-meta o m))
     (read-atom r)))
 
 (defn read-seq [r start end]

@@ -1,6 +1,7 @@
 (ns mal.printer
-  (:require [clojure.string :as s])
-  (:require [clojure.test :refer [function?]]))
+  (:refer-clojure :exclude [pr-str])
+  (:require [clojure.string :as s]
+            [clojure.test :refer [function?]]))
 
 (defn atom? [v] (= (type v) clojure.lang.Atom))
 

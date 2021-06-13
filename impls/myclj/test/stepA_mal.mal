@@ -1,0 +1,33 @@
+;; Tests interop with host (clojure) language
+
+(clojure-eval "7")
+;=>7
+
+(clojure-eval "\"7\"")
+;=>7
+
+(clojure-eval "(= 123 123)")
+;=>true
+
+(clojure-eval "(= 123 456)")
+;=>false
+
+(clojure-eval "'(7 8 9)")
+;=>(7 8 9)
+
+(clojure-eval "{:abc 789}")
+;=>{:abc 789}
+
+(clojure-eval "(println \"hello\")")
+;/hello
+;=>nil
+
+(clojure-eval "(defn foo [] 8)")
+(clojure-eval "(foo)")
+;=>8
+
+(clojure-eval "(map count (clojure.string/split \"This sentence has five words\" #\" \"))")
+;=>(4 8 3 4 5)
+
+(clojure-eval "(interleave '(3 \\a 45 \\b) (repeat \\|))")
+;=>"(3 | a | 45 | b |)"
